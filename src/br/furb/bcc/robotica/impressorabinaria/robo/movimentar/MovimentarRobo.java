@@ -42,6 +42,10 @@ public class MovimentarRobo {
 	public void movimentarCarinho() {
 		Motor.A.rotate(RoboConfig.DISTANCIA_CARINHO);
 	}
+	
+	public void movimentarCanetaRe() {
+		Motor.B.rotate(RoboConfig.DISTANCIA_CANETA * (-1));
+	}
 
 	public void movimentarCaneta() {
 		Motor.B.rotate(RoboConfig.DISTANCIA_CANETA);
@@ -60,6 +64,14 @@ public class MovimentarRobo {
 
 	public void baixarCaneta() {
 		Motor.C.rotate(RoboConfig.VALOR_BAIXAR_CANETA);
+	}
+	
+	public void calibrarBase(){
+		Motor.A.rotate(RoboConfig.TAMANHO_BASE);
+	}
+	
+	public void calibrarCabecote(){
+		Motor.B.rotate(RoboConfig.TAMANHO_CABECOTE);
 	}
 
 }
