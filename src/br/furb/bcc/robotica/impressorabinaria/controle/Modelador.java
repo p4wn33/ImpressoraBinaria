@@ -21,33 +21,58 @@ public class Modelador {
 		 ArrayList<int[]> vetores = GerenciadorMatriz.getInstance().getMatriz().getVetores();
 		 ArrayList<Linha> linhas = new ArrayList<Linha>();
 		 int nrLinha = 0;
+		 
 		 for(int[] vetor : vetores){
+			 
 			 ArrayList<Segmento> segmentos = new ArrayList<Segmento>();
 			 Segmento segmento = null;
 			 
 			 for(int j = 0; j < vetor.length; j++){
 				 boolean fimLinha = j == vetor.length-1;
 				 boolean novoSegmento = segmento == null;
+				 boolean escuro = vetor[j] == 0;
 				 
-				 if(vetor[j] == 0){ //novo segmento, continuidade de segmento existente ou termino de linha
-					 if(segmento == null){ //novo segmento
-						 segmento = new Segmento();
-						 segmento.setInicio(j);
-					 } else { //continuidade de segmento existente
-						 segmento.setFim(j);
+				 //fim da linha?
+				 if(fimLinha && novoSegmento){
+					 //AVALIAR SE EH 1 OU ZERO PARA CRIAR OU NAO O NOVO SEGMENTO
+					 if(escuro){
+						 criarSegmentoFinal(segmentos, segmento, j);
+						 segmento = null;
+					 } else {
+						 //nao faz nada devido a colocacao clara
 					 }
 				 }
-				 if(j == vetor.length-1){
-					 
-				 }
 				 
-				 
-				 else{ //termino de segmento ou omissao de posicoes
-					 if(segmento != null){ //termino de segmento
-						 segmentos.add(segmento.clone());
+				 if(fimLinha && !novoSegmento){
+					 //AVALIAR SE EH 1 OU ZERO PARA FINALIZAR O SEGMENTO INCLUINDO OU NAO A ULTIMA POSICAO
+					 if(escuro){
+						 terminarSegmentoInclusivo(segmentos, segmento, j);
+						 segmento = null;
+					 } else {
+						 terminarSegmentoExclusivo(segmentos, segmento, j);
 						 segmento = null;
 					 }
-					 //omissao de posicoes (nao faz nada)
+				 }
+				 
+				 //inicio de segmento?
+				 if(!fimLinha && novoSegmento){
+					 //AVALIAR SE EH 1 OU ZERO PARA CRIAR OU NAO UM NOVO SEGMENTO
+					 if(escuro){
+						 criarNovoSegmento(segmento, j);
+					 } else {
+						//nao faz nada devido a colocacao clara
+					 }
+				 }
+				 
+				 //continua segmento?
+				 if(!fimLinha && !novoSegmento){
+					 //AVALIAR SE EH 1 OU ZERO PARA CONTINUAR OU TERMINAR O SEGMENTO
+					 if(escuro){
+						 continuarSegmento(segmento, j);
+					 } else {
+						 terminarSegmento(segmentos, segmento);
+						 segmento = null;
+					 }
 				 }
 			 }
 			 
@@ -55,6 +80,73 @@ public class Modelador {
 			 linhas.add(linha);
 			 nrLinha++;
 		 }
+		 
+		 GerenciadorMatriz.getInstance().getMatriz().setLinhas(linhas);
+	}
+	
+	/**
+	 * Cria um unico segmento no final da linha
+	 * @param segmentos
+	 * @param segmento
+	 * @param posicao
+	 */
+	private void criarSegmentoFinal(ArrayList<Segmento> segmentos, Segmento segmento, int posicao){
+		segmento = new Segmento();
+		segmento.setInicio(posicao);
+		segmento.setFim(posicao);
+		segmentos.add(segmento.clone());
+	}
+	
+	/**
+	 * Termina um segmento incluindo a ultima posicao da linha
+	 * @param segmentos
+	 * @param segmento
+	 * @param posicao
+	 */
+	private void terminarSegmentoInclusivo(ArrayList<Segmento> segmentos, Segmento segmento, int posicao){
+		segmento.setFim(posicao);
+		segmentos.add(segmento.clone());
+		
+	}
+	
+	/**
+	 * Termina um segmento sem considerar a ultima posicao da linha
+	 * @param segmentos
+	 * @param segmento
+	 * @param posicao
+	 */
+	private void terminarSegmentoExclusivo(ArrayList<Segmento> segmentos, Segmento segmento, int posicao){
+		segmento.setFim(posicao-1);
+		segmentos.add(segmento.clone());
+	}
+	
+	/**
+	 * Cria um novo segmento no inicio ou no meio da linha
+	 * @param segmento
+	 * @param posicao
+	 */
+	private void criarNovoSegmento(Segmento segmento, int posicao){
+		segmento = new Segmento();
+		segmento.setInicio(posicao);
+		segmento.setFim(posicao);
+	}
+	
+	/**
+	 * Continua um segmento atualizando prolongando a posicao final. Nao usado na ultima posicao da linha
+	 * @param segmento
+	 * @param posicao
+	 */
+	private void continuarSegmento(Segmento segmento, int posicao){
+		segmento.setFim(posicao);		
+	}
+	
+	/**
+	 * Termina um segmento no meio da linha adicionando-o a lista
+	 * @param segmentos
+	 * @param segmento
+	 */
+	private void terminarSegmento(ArrayList<Segmento> segmentos, Segmento segmento){
+		segmentos.add(segmento.clone());
 	}
 
 }
