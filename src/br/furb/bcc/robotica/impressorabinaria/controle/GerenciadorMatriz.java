@@ -55,4 +55,9 @@ public class GerenciadorMatriz {
 	public Matriz getMatriz(){
 		return this.matriz;
 	}
+
+	public void setMatriz(Matriz matriz) {
+		this.matriz = matriz;
+	}
+	
 }

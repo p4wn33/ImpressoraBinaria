@@ -11,6 +11,11 @@ public class Matriz {
 		super();
 		this.vetores = matriz;
 	}
+	
+	public Matriz() {
+		this.vetores = null;
+		this.linhas = null;
+	}
 
 	public ArrayList<int[]> getVetores() {
 		return vetores;

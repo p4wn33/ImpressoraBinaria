@@ -40,7 +40,7 @@ public class MovimentarRobo {
 	}
 
 	public void movimentarCarinho() {
-		Motor.A.rotate(RoboConfig.DISTANCIA_CARINHO);
+		Motor.A.rotate(RoboConfig.DISTANCIA_CARRINHO);
 	}
 	
 	public void movimentarCanetaRe() {
