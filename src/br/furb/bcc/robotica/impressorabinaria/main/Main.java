@@ -44,15 +44,20 @@ public class Main {
 //		
 //		RoboImprime.getInstance().imprimirMatriz(GerenciadorMatriz.getInstance().getMatriz());
 		
-		//executar();
-		ExecutaTestes.testeManual2();
+		executar();
+		//ExecutaTestes.testeManual2();
 	}
 	
 	
 	private static void executar(){
 		GerenciadorMatriz.getInstance().carregarArquivoMatriz();
 		Modelador.getInstance().criarModelagem();
-		RoboImprime.getInstance().imprimirMatriz(GerenciadorMatriz.getInstance().getMatriz());
+		
+		for(Linha linha : GerenciadorMatriz.getInstance().getMatriz().getLinhas()){
+			System.out.println(linha.getNrLinha() + " - " + linha.getSegmentos().size());
+		}
+		
+		//RoboImprime.getInstance().imprimirMatriz(GerenciadorMatriz.getInstance().getMatriz());
 	}
 	
 }
