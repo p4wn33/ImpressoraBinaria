@@ -62,6 +62,7 @@ public class RoboImprime {
 	
 	private void voltarEscritor(int qtd) {
 		Motor.B.rotate((RoboConfig.DISTANCIA_CANETA * qtd) * (-1));
+		posicaoEscritor= posicaoEscritor - qtd;
 	}
 
 	private void levantarCaneta() {
