@@ -44,7 +44,8 @@ public class Main {
 //		
 //		RoboImprime.getInstance().imprimirMatriz(GerenciadorMatriz.getInstance().getMatriz());
 		
-		executar();
+		//executar();
+		ExecutaTestes.testeManual2();
 	}
 	
 	
