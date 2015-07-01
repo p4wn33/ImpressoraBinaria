@@ -18,7 +18,13 @@ public class Segmento implements Cloneable{
 	}
 	
 	public Segmento clone(){
-		return this.clone();
+		try {
+			return (Segmento) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

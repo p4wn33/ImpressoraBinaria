@@ -3,6 +3,7 @@ package br.furb.bcc.robotica.impressorabinaria.controle;
 import java.util.ArrayList;
 
 import br.furb.bcc.robotica.impressorabinaria.modelo.Linha;
+import br.furb.bcc.robotica.impressorabinaria.modelo.ListaSegmento;
 import br.furb.bcc.robotica.impressorabinaria.modelo.Segmento;
 
 public class Modelador {
@@ -24,7 +25,7 @@ public class Modelador {
 		 
 		 for(int[] vetor : vetores){
 			 
-			 ArrayList<Segmento> segmentos = new ArrayList<Segmento>();
+			 ListaSegmento segmentos = new ListaSegmento();
 			 Segmento segmento = null;
 			 
 			 for(int j = 0; j < vetor.length; j++){
@@ -36,6 +37,7 @@ public class Modelador {
 				 if(fimLinha && novoSegmento){
 					 //AVALIAR SE EH 1 OU ZERO PARA CRIAR OU NAO O NOVO SEGMENTO
 					 if(escuro){
+						 segmento = new Segmento();
 						 criarSegmentoFinal(segmentos, segmento, j);
 						 segmento = null;
 					 } else {
@@ -58,6 +60,7 @@ public class Modelador {
 				 if(!fimLinha && novoSegmento){
 					 //AVALIAR SE EH 1 OU ZERO PARA CRIAR OU NAO UM NOVO SEGMENTO
 					 if(escuro){
+						 segmento = new Segmento();
 						 criarNovoSegmento(segmento, j);
 					 } else {
 						//nao faz nada devido a colocacao clara
@@ -76,7 +79,7 @@ public class Modelador {
 				 }
 			 }
 			 
-			 Linha linha = new Linha(nrLinha, segmentos);
+			 Linha linha = new Linha(nrLinha, segmentos.getSegmentos());
 			 linhas.add(linha);
 			 nrLinha++;
 		 }
@@ -90,11 +93,10 @@ public class Modelador {
 	 * @param segmento
 	 * @param posicao
 	 */
-	private void criarSegmentoFinal(ArrayList<Segmento> segmentos, Segmento segmento, int posicao){
-		segmento = new Segmento();
+	private void criarSegmentoFinal(ListaSegmento segmentos, Segmento segmento, int posicao){
 		segmento.setInicio(posicao);
 		segmento.setFim(posicao);
-		segmentos.add(segmento.clone());
+		segmentos.getSegmentos().add(segmento.clone());
 	}
 	
 	/**
@@ -103,9 +105,9 @@ public class Modelador {
 	 * @param segmento
 	 * @param posicao
 	 */
-	private void terminarSegmentoInclusivo(ArrayList<Segmento> segmentos, Segmento segmento, int posicao){
+	private void terminarSegmentoInclusivo(ListaSegmento segmentos, Segmento segmento, int posicao){
 		segmento.setFim(posicao);
-		segmentos.add(segmento.clone());
+		segmentos.getSegmentos().add(segmento.clone());
 		
 	}
 	
@@ -115,9 +117,9 @@ public class Modelador {
 	 * @param segmento
 	 * @param posicao
 	 */
-	private void terminarSegmentoExclusivo(ArrayList<Segmento> segmentos, Segmento segmento, int posicao){
+	private void terminarSegmentoExclusivo(ListaSegmento segmentos, Segmento segmento, int posicao){
 		segmento.setFim(posicao-1);
-		segmentos.add(segmento.clone());
+		segmentos.getSegmentos().add(segmento.clone());
 	}
 	
 	/**
@@ -126,7 +128,6 @@ public class Modelador {
 	 * @param posicao
 	 */
 	private void criarNovoSegmento(Segmento segmento, int posicao){
-		segmento = new Segmento();
 		segmento.setInicio(posicao);
 		segmento.setFim(posicao);
 	}
@@ -145,8 +146,8 @@ public class Modelador {
 	 * @param segmentos
 	 * @param segmento
 	 */
-	private void terminarSegmento(ArrayList<Segmento> segmentos, Segmento segmento){
-		segmentos.add(segmento.clone());
+	private void terminarSegmento(ListaSegmento segmentos, Segmento segmento){
+		segmentos.getSegmentos().add(segmento.clone());
 	}
 
 }
