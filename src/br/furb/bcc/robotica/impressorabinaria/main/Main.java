@@ -50,7 +50,8 @@ public class Main {
 	
 	
 	private static void executar(){
-		GerenciadorMatriz.getInstance().carregarArquivoMatriz();
+		//GerenciadorMatriz.getInstance().carregarArquivoMatriz();
+		GerenciadorMatriz.getInstance().carregaMatrizEstatica();
 		Modelador.getInstance().criarModelagem();
 		
 		for(Linha linha : GerenciadorMatriz.getInstance().getMatriz().getLinhas()){
