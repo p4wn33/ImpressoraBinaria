@@ -54,8 +54,9 @@ public class GerenciadorMatriz {
 	
 	public void carregaMatrizEstatica(){
 		this.matriz = new Matriz(new ArrayList<int[]>());
-		for(int i = 0; i < matriz.getVetoresEstaticos().length; i++){
-			matriz.getVetores().add(matriz.getVetoresEstaticos()[i]);
+		int v[][] = matriz.getVetoresEstaticos();
+		for(int i = 0; i < v.length; i++){
+			matriz.getVetores().add(v[i]);
 		}
 	}
 	
